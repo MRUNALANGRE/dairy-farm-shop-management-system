@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>User Dashboard - Dairy Farm Shop</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f6f8;
+        }
+
+        .navbar {
+            background: #2e7d32;
+            color: white;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar strong {
+            font-size: 20px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .container {
+            width: 90%;
+            margin: 40px auto;
+        }
+
+        .welcome {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+        }
+
+        .welcome h1 {
+            color: #2e7d32;
+        }
+
+        .welcome p {
+            color: #555;
+            font-size: 17px;
+        }
+
+        .cards {
+            display: flex;
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            width: 250px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            color: #2e7d32;
+        }
+
+        .card p {
+            color: #666;
+        }
+
+        .logout {
+            background: #c62828;
+            padding: 8px 15px;
+            border-radius: 5px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="navbar">
+
+        <strong>
+            Dairy Farm Shop
+        </strong>
+
+        <div>
+
+            <a href="/user-dashboard">
+                Dashboard
+            </a>
+
+            <a href="/user-logout"
+               class="logout">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="container">
+
+        <div class="welcome">
+
+            <h1>
+                Welcome,
+                <span th:text="${session.user.fullName}">
+                    User
+                </span>!
+            </h1>
+
+            <p>
+                You have successfully logged in to the
+                Dairy Farm Shop.
+            </p>
+
+        </div>
+
+
+        <div class="cards">
+
+            <div class="card">
+
+                <h3>
+                    My Account
+                </h3>
+
+                <p>
+                    Name:
+                    <strong th:text="${session.user.fullName}">
+                        User
+                    </strong>
+                </p>
+
+                <p>
+                    Email:
+                    <strong th:text="${session.user.email}">
+                        user@example.com
+                    </strong>
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    Dairy Products
+                </h3>
+
+                <p>
+                    Browse available dairy products.
+                </p>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>
+                    Shopping
+                </h3>
+
+                <p>
+                    Your customer dashboard is ready.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

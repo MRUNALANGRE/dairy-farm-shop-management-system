@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Invoices - Dairy Farm Shop</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f6f8;
+        }
+
+        .navbar {
+            background: #2e7d32;
+            color: white;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+        }
+
+        .container {
+            width: 95%;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #2e7d32;
+            margin-bottom: 25px;
+        }
+
+        .new-bill {
+            display: inline-block;
+            background: #2e7d32;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #2e7d32;
+            color: white;
+            padding: 13px;
+            text-align: left;
+        }
+
+        td {
+            padding: 13px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .view {
+            background: #1976d2;
+            color: white;
+            padding: 8px 14px;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <strong>Dairy Farm Shop</strong>
+
+    <div>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/billing">New Bill</a>
+        <a href="/logout">Logout</a>
+    </div>
+
+</div>
+
+<div class="container">
+
+    <h2>Invoice History</h2>
+
+    <a href="/billing" class="new-bill">
+        + Create New Bill
+    </a>
+
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>ID</th>
+                <th>Invoice Number</th>
+                <th>Customer Name</th>
+                <th>Mobile</th>
+                <th>Payment</th>
+                <th>Total Amount</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr th:each="order : ${orders}">
+
+                <td th:text="${order.id}">
+                    1
+                </td>
+
+                <td th:text="${order.invoiceNumber}">
+                    INV-20261005160000
+                </td>
+
+                <td th:text="${order.customerName}">
+                    Customer
+                </td>
+
+                <td th:text="${order.customerMobile}">
+                    9999999999
+                </td>
+
+                <td th:text="${order.paymentMethod}">
+                    Cash
+                </td>
+
+                <td>
+                    ₹<span th:text="${order.totalAmount}">
+                        120
+                    </span>
+                </td>
+
+                <td
+                    th:text="${#temporals.format(order.orderDate, 'dd-MM-yyyy HH:mm')}">
+                    05-10-2026 16:00
+                </td>
+
+                <td>
+
+                    <a
+                        th:href="@{/billing/invoice/{id}(id=${order.id})}"
+                        class="view">
+
+                        View Invoice
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+            <tr th:if="${#lists.isEmpty(orders)}">
+
+                <td colspan="8" class="empty">
+
+                    No invoices found.
+
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</body>
+
+</html>

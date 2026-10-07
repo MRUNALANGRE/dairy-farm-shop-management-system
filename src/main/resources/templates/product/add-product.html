@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Product - Dairy Farm Shop</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f6f8;
+        }
+
+        .navbar {
+            background: #2e7d32;
+            color: white;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+        }
+
+        .container {
+            width: 650px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #2e7d32;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .field {
+            flex: 1;
+        }
+
+        button {
+            background: #2e7d32;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1b5e20;
+        }
+
+        .back {
+            display: inline-block;
+            background: #777;
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <strong>Dairy Farm Shop</strong>
+
+    <div>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/products">Products</a>
+        <a href="/logout">Logout</a>
+    </div>
+
+</div>
+
+<div class="container">
+
+    <h2>Add Product</h2>
+
+    <form action="/products/save" method="post">
+
+        <label>Product Name</label>
+
+        <input
+            type="text"
+            name="productName"
+            placeholder="Enter product name"
+            required>
+
+        <label>Description</label>
+
+        <textarea
+            name="description"
+            placeholder="Enter product description"></textarea>
+
+        <div class="row">
+
+            <div class="field">
+
+                <label>Price</label>
+
+                <input
+                    type="number"
+                    name="price"
+                    step="0.01"
+                    min="0"
+                    placeholder="Enter price"
+                    required>
+
+            </div>
+
+            <div class="field">
+
+                <label>Quantity</label>
+
+                <input
+                    type="number"
+                    name="quantity"
+                    min="0"
+                    placeholder="Enter quantity"
+                    required>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="field">
+
+                <label>Category ID</label>
+
+                <input
+                    type="number"
+                    name="categoryId"
+                    min="1"
+                    placeholder="Enter category ID">
+
+            </div>
+
+            <div class="field">
+
+                <label>Company ID</label>
+
+                <input
+                    type="number"
+                    name="companyId"
+                    min="1"
+                    placeholder="Enter company ID">
+
+            </div>
+
+        </div>
+
+        <button type="submit">
+            Save Product
+        </button>
+
+        <a href="/products" class="back">
+            Cancel
+        </a>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>

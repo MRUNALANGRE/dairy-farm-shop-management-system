@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dairy Farm Shop - Dashboard</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7f6;
+            color: #263238;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            height: 70px;
+            background: linear-gradient(135deg, #14532d, #2e7d32);
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 35px;
+
+            box-shadow: 0 3px 15px rgba(0,0,0,0.15);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+
+            background: rgba(255,255,255,0.18);
+
+            border-radius: 12px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 22px;
+        }
+
+        .brand-text {
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+        .brand-subtitle {
+            font-size: 11px;
+            opacity: 0.8;
+            margin-top: 2px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+
+            padding: 9px 12px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            transition: 0.2s;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .logout {
+            background: #dc3545 !important;
+            margin-left: 8px;
+        }
+
+        .logout:hover {
+            background: #b02a37 !important;
+        }
+
+        /* ================= MAIN ================= */
+
+        .container {
+            width: 92%;
+            max-width: 1400px;
+            margin: 35px auto 60px;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            background:
+                linear-gradient(120deg, rgba(20,83,45,0.97), rgba(46,125,50,0.88));
+
+            border-radius: 20px;
+
+            padding: 38px 42px;
+
+            color: white;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            box-shadow: 0 8px 25px rgba(46,125,50,0.20);
+
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::after {
+            content: "🥛";
+
+            position: absolute;
+            right: 55px;
+            bottom: -25px;
+
+            font-size: 150px;
+
+            opacity: 0.12;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 15px;
+            opacity: 0.9;
+            max-width: 650px;
+            line-height: 1.6;
+        }
+
+        .status {
+            margin-top: 18px;
+
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            background: rgba(255,255,255,0.13);
+
+            padding: 8px 14px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #8cff9c;
+        }
+
+        /* ================= SUMMARY ================= */
+
+        .section-title {
+            margin: 32px 0 18px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .section-title h2 {
+            font-size: 21px;
+            color: #263238;
+        }
+
+        .section-title span {
+            font-size: 13px;
+            color: #78909c;
+        }
+
+        .summary-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+        }
+
+        .summary-card {
+            background: white;
+
+            border-radius: 15px;
+
+            padding: 22px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+
+            border: 1px solid #edf0ef;
+
+            transition: 0.25s;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-4px);
+
+            box-shadow: 0 9px 25px rgba(0,0,0,0.10);
+        }
+
+        .summary-info small {
+            color: #78909c;
+            font-size: 13px;
+        }
+
+        .summary-info h3 {
+            font-size: 28px;
+            margin-top: 7px;
+            color: #263238;
+        }
+
+        .summary-icon {
+            width: 50px;
+            height: 50px;
+
+            border-radius: 13px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 24px;
+        }
+
+        .green {
+            background: #e8f5e9;
+        }
+
+        .blue {
+            background: #e3f2fd;
+        }
+
+        .orange {
+            background: #fff3e0;
+        }
+
+        .purple {
+            background: #f3e5f5;
+        }
+
+        /* ================= MODULES ================= */
+
+        .module-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+        }
+
+        .module-card {
+            background: white;
+
+            border-radius: 17px;
+
+            padding: 25px;
+
+            border: 1px solid #edf0ef;
+
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+
+            transition: 0.25s;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow: 0 10px 28px rgba(0,0,0,0.10);
+        }
+
+        .module-top {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+
+            margin-bottom: 16px;
+        }
+
+        .module-icon {
+            width: 50px;
+            height: 50px;
+
+            border-radius: 13px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 24px;
+        }
+
+        .module-card h3 {
+            font-size: 18px;
+            color: #263238;
+        }
+
+        .module-card p {
+            color: #78909c;
+
+            font-size: 13px;
+
+            line-height: 1.6;
+
+            min-height: 42px;
+        }
+
+        .module-button {
+            display: inline-block;
+
+            margin-top: 18px;
+
+            text-decoration: none;
+
+            background: #2e7d32;
+
+            color: white;
+
+            padding: 9px 15px;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+        .module-button:hover {
+            background: #1b5e20;
+        }
+
+        /* ================= QUICK ACTIONS ================= */
+
+        .quick-actions {
+            margin-top: 30px;
+
+            background: white;
+
+            border-radius: 17px;
+
+            padding: 25px;
+
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+
+            border: 1px solid #edf0ef;
+        }
+
+        .quick-actions h2 {
+            font-size: 20px;
+            margin-bottom: 18px;
+        }
+
+        .action-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 15px;
+        }
+
+        .action {
+            text-decoration: none;
+
+            border: 1px solid #e5e9e7;
+
+            padding: 16px;
+
+            border-radius: 12px;
+
+            color: #37474f;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            transition: 0.2s;
+        }
+
+        .action:hover {
+            border-color: #2e7d32;
+
+            background: #f1f8f3;
+
+            color: #1b5e20;
+        }
+
+        .action-icon {
+            font-size: 22px;
+        }
+
+        .action strong {
+            font-size: 14px;
+        }
+
+        .action small {
+            display: block;
+
+            color: #90a4ae;
+
+            margin-top: 3px;
+        }
+
+        /* ================= FOOTER ================= */
+
+        .footer {
+            text-align: center;
+
+            margin-top: 40px;
+
+            color: #90a4ae;
+
+            font-size: 12px;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1100px) {
+
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .module-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 800px) {
+
+            .navbar {
+                height: auto;
+                padding: 18px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero {
+                padding: 30px;
+            }
+
+            .hero h1 {
+                font-size: 25px;
+            }
+
+        }
+
+        @media (max-width: 600px) {
+
+            .summary-grid,
+            .module-grid,
+            .action-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .hero {
+                padding: 25px;
+            }
+
+            .hero::after {
+                display: none;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<div class="navbar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            🥛
+        </div>
+
+        <div>
+            <div class="brand-text">
+                Dairy Farm Shop
+            </div>
+
+            <div class="brand-subtitle">
+                Shop Management System
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="/categories">
+            Categories
+        </a>
+
+        <a href="/companies">
+            Companies
+        </a>
+
+        <a href="/products">
+            Products
+        </a>
+
+        <a href="/billing">
+            Billing
+        </a>
+
+        <a href="/billing/orders">
+            Invoices
+        </a>
+
+        <a href="/sales-report">
+            Sales Report
+        </a>
+
+        <a href="/logout" class="logout">
+            Logout
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="container">
+
+
+    <!-- HERO -->
+
+    <div class="hero">
+
+        <div class="hero-content">
+
+            <h1>
+                Welcome to Dairy Farm Shop 👋
+            </h1>
+
+            <p>
+                Manage your dairy products, inventory, billing,
+                invoices and sales operations from one centralized
+                management system.
+            </p>
+
+            <div class="status">
+
+                <span class="status-dot"></span>
+
+                System is running normally
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= SUMMARY ================= -->
+
+    <div class="section-title">
+
+        <h2>
+            Business Overview
+        </h2>
+
+        <span>
+            Dairy Shop Management
+        </span>
+
+    </div>
+
+
+    <div class="summary-grid">
+
+
+        <div class="summary-card">
+
+            <div class="summary-info">
+
+                <small>
+                    Product Management
+                </small>
+
+                <h3>
+                    📦
+                </h3>
+
+            </div>
+
+            <div class="summary-icon green">
+                🥛
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-info">
+
+                <small>
+                    Billing & Orders
+                </small>
+
+                <h3>
+                    🧾
+                </h3>
+
+            </div>
+
+            <div class="summary-icon blue">
+                💳
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-info">
+
+                <small>
+                    Inventory
+                </small>
+
+                <h3>
+                    📊
+                </h3>
+
+            </div>
+
+            <div class="summary-icon orange">
+                📦
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-info">
+
+                <small>
+                    Sales Analysis
+                </small>
+
+                <h3>
+                    📈
+                </h3>
+
+            </div>
+
+            <div class="summary-icon purple">
+                💰
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ================= MANAGEMENT ================= -->
+
+    <div class="section-title">
+
+        <h2>
+            Management Modules
+        </h2>
+
+        <span>
+            Choose a module to continue
+        </span>
+
+    </div>
+
+
+    <div class="module-grid">
+
+
+        <!-- CATEGORY -->
+
+        <div class="module-card">
+
+            <div class="module-top">
+
+                <div class="module-icon green">
+                    🏷️
+                </div>
+
+                <h3>
+                    Categories
+                </h3>
+
+            </div>
+
+            <p>
+                Organize dairy products into categories
+                and maintain category information.
+            </p>
+
+            <a href="/categories" class="module-button">
+                Manage Categories →
+            </a>
+
+        </div>
+
+
+        <!-- COMPANY -->
+
+        <div class="module-card">
+
+            <div class="module-top">
+
+                <div class="module-icon blue">
+                    🏢
+                </div>
+
+                <h3>
+                    Companies
+                </h3>
+
+            </div>
+
+            <p>
+                Manage dairy product companies,
+                suppliers and company information.
+            </p>
+
+            <a href="/companies" class="module-button">
+                Manage Companies →
+            </a>
+
+        </div>
+
+
+        <!-- PRODUCTS -->
+
+        <div class="module-card">
+
+            <div class="module-top">
+
+                <div class="module-icon orange">
+                    🥛
+                </div>
+
+                <h3>
+                    Products
+                </h3>
+
+            </div>
+
+            <p>
+                Add, edit, search and manage all
+                dairy products and their stock.
+            </p>
+
+            <a href="/products" class="module-button">
+                Manage Products →
+            </a>
+
+        </div>
+
+
+        <!-- BILLING -->
+
+        <div class="module-card">
+
+            <div class="module-top">
+
+                <div class="module-icon purple">
+                    🛒
+                </div>
+
+                <h3>
+                    Billing
+                </h3>
+
+            </div>
+
+            <p>
+                Create customer bills, add multiple
+                products and generate invoices.
+            </p>
+
+            <a href="/billing" class="module-button">
+                Create New Bill →
+            </a>
+
+        </div>
+
+
+        <!-- INVOICES -->
+
+        <div class="module-card">
+
+            <div class="module-top">
+
+                <div class="module-icon blue">
+                    🧾
+                </div>
+
+                <h3>
+                    Invoices
+                </h3>
+
+            </div>
+
+            <p>
+                View previous invoices, customer
+                information and transaction history.
+            </p>
+
+            <a href="/billing/orders" class="module-button">
+                View Invoices →
+            </a>
+
+        </div>
+
+
+        <!-- SALES -->
+
+        <div class="module-card">
+
+            <div class="module-top">
+
+                <div class="module-icon green">
+                    📈
+                </div>
+
+                <h3>
+                    Sales Report
+                </h3>
+
+            </div>
+
+            <p>
+                Analyze sales, orders and revenue
+                using detailed sales reports.
+            </p>
+
+            <a href="/sales-report" class="module-button">
+                View Reports →
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ================= QUICK ACTIONS ================= -->
+
+    <div class="quick-actions">
+
+        <h2>
+            Quick Actions ⚡
+        </h2>
+
+
+        <div class="action-grid">
+
+
+            <a href="/products/add" class="action">
+
+                <div class="action-icon">
+                    ➕
+                </div>
+
+                <div>
+
+                    <strong>
+                        Add Product
+                    </strong>
+
+                    <small>
+                        Add a new dairy product
+                    </small>
+
+                </div>
+
+            </a>
+
+
+            <a href="/categories/add" class="action">
+
+                <div class="action-icon">
+                    🏷️
+                </div>
+
+                <div>
+
+                    <strong>
+                        Add Category
+                    </strong>
+
+                    <small>
+                        Create product category
+                    </small>
+
+                </div>
+
+            </a>
+
+
+            <a href="/companies/add" class="action">
+
+                <div class="action-icon">
+                    🏢
+                </div>
+
+                <div>
+
+                    <strong>
+                        Add Company
+                    </strong>
+
+                    <small>
+                        Register a dairy company
+                    </small>
+
+                </div>
+
+            </a>
+
+
+            <a href="/billing" class="action">
+
+                <div class="action-icon">
+                    🛒
+                </div>
+
+                <div>
+
+                    <strong>
+                        New Sale
+                    </strong>
+
+                    <small>
+                        Create customer invoice
+                    </small>
+
+                </div>
+
+            </a>
+
+
+            <a href="/billing/orders" class="action">
+
+                <div class="action-icon">
+                    🧾
+                </div>
+
+                <div>
+
+                    <strong>
+                        Recent Invoices
+                    </strong>
+
+                    <small>
+                        View transaction history
+                    </small>
+
+                </div>
+
+            </a>
+
+
+            <a href="/sales-report" class="action">
+
+                <div class="action-icon">
+                    📊
+                </div>
+
+                <div>
+
+                    <strong>
+                        Sales Analytics
+                    </strong>
+
+                    <small>
+                        Check business performance
+                    </small>
+
+                </div>
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
+    <div class="footer">
+
+        © 2026 Dairy Farm Shop Management System
+        • Java Spring Boot • Oracle Database
+
+    </div>
+
+
+</div>
+
+</body>
+
+</html>

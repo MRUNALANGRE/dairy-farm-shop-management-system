@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Bill - Dairy Farm Shop</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f6f8;
+        }
+
+        .navbar {
+            background: #2e7d32;
+            color: white;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+        }
+
+        .container {
+            width: 95%;
+            margin: 30px auto;
+        }
+
+        .box {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #2e7d32;
+            margin-top: 0;
+        }
+
+        h3 {
+            color: #2e7d32;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 100%;
+        }
+
+        .customer-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .customer-field {
+            flex: 1;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th {
+            background: #2e7d32;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .quantity {
+            width: 100px;
+        }
+
+        .remove-btn {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 7px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .add-btn {
+            background: #1976d2;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .bill-btn {
+            background: #2e7d32;
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .total {
+            text-align: right;
+            font-size: 20px;
+            font-weight: bold;
+            color: #2e7d32;
+            margin-top: 20px;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <strong>Dairy Farm Shop</strong>
+
+    <div>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/products">Products</a>
+        <a href="/billing/orders">Invoices</a>
+        <a href="/logout">Logout</a>
+    </div>
+
+</div>
+
+<div class="container">
+
+    <div class="box">
+
+        <h2>Create New Bill</h2>
+
+        <div
+            th:if="${param.error}"
+            class="error">
+
+            Please add at least one product.
+
+        </div>
+
+        <form
+            action="/billing/create"
+            method="post"
+            id="billingForm">
+
+            <h3>Customer Details</h3>
+
+            <div class="customer-row">
+
+                <div class="customer-field">
+
+                    <label>Customer Name</label>
+
+                    <input
+                        type="text"
+                        name="customerName"
+                        placeholder="Enter customer name"
+                        required>
+
+                </div>
+
+                <div class="customer-field">
+
+                    <label>Mobile Number</label>
+
+                    <input
+                        type="text"
+                        name="customerMobile"
+                        placeholder="Enter mobile number">
+
+                </div>
+
+            </div>
+
+            <h3>Products</h3>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Available Stock</th>
+                        <th>Quantity</th>
+                        <th>Item Total</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="cartBody">
+
+                    <tr class="cart-row">
+
+                        <td>
+
+                            <select
+                                name="productIds"
+                                class="product-select"
+                                required
+                                onchange="updateRow(this)">
+
+                                <option value="">
+                                    Select Product
+                                </option>
+
+                                <option
+                                    th:each="product : ${products}"
+                                    th:value="${product.id}"
+                                    th:data-price="${product.price}"
+                                    th:data-stock="${product.quantity}"
+                                    th:text="${product.productName}">
+                                </option>
+
+                            </select>
+
+                        </td>
+
+                        <td class="price">
+                            0.00
+                        </td>
+
+                        <td class="stock">
+                            0
+                        </td>
+
+                        <td>
+
+                            <input
+                                type="number"
+                                name="quantities"
+                                class="quantity"
+                                value="1"
+                                min="1"
+                                onchange="calculateTotal()"
+                                required>
+
+                        </td>
+
+                        <td class="item-total">
+                            0.00
+                        </td>
+
+                        <td>
+
+                            <button
+                                type="button"
+                                class="remove-btn"
+                                onclick="removeRow(this)">
+                                Remove
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+            <button
+                type="button"
+                class="add-btn"
+                onclick="addRow()">
+
+                + Add Another Product
+
+            </button>
+
+            <div class="total">
+
+                Grand Total:
+                ₹<span id="grandTotal">0.00</span>
+
+            </div>
+
+            <h3>Payment Method</h3>
+
+            <select
+                name="paymentMethod"
+                required>
+
+                <option value="">
+                    Select Payment Method
+                </option>
+
+                <option value="Cash">
+                    Cash
+                </option>
+
+                <option value="Card">
+                    Card
+                </option>
+
+            </select>
+
+            <br><br>
+
+            <button
+                type="submit"
+                class="bill-btn">
+
+                Generate Invoice
+
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+
+function updateRow(select) {
+
+    var row = select.closest(".cart-row");
+
+    var option =
+        select.options[select.selectedIndex];
+
+    var price =
+        parseFloat(option.getAttribute("data-price")) || 0;
+
+    var stock =
+        parseInt(option.getAttribute("data-stock")) || 0;
+
+    row.querySelector(".price").innerText =
+        price.toFixed(2);
+
+    row.querySelector(".stock").innerText =
+        stock;
+
+    var quantity =
+        row.querySelector(".quantity");
+
+    quantity.max = stock;
+
+    calculateTotal();
+}
+
+
+function calculateTotal() {
+
+    var rows =
+        document.querySelectorAll(".cart-row");
+
+    var grandTotal = 0;
+
+    rows.forEach(function(row) {
+
+        var price =
+            parseFloat(
+                row.querySelector(".price").innerText
+            ) || 0;
+
+        var quantity =
+            parseInt(
+                row.querySelector(".quantity").value
+            ) || 0;
+
+        var itemTotal =
+            price * quantity;
+
+        row.querySelector(".item-total").innerText =
+            itemTotal.toFixed(2);
+
+        grandTotal += itemTotal;
+
+    });
+
+    document.getElementById("grandTotal").innerText =
+        grandTotal.toFixed(2);
+}
+
+
+function addRow() {
+
+    var cartBody =
+        document.getElementById("cartBody");
+
+    var firstRow =
+        document.querySelector(".cart-row");
+
+    var newRow =
+        firstRow.cloneNode(true);
+
+    newRow.querySelector(".product-select").value = "";
+
+    newRow.querySelector(".price").innerText =
+        "0.00";
+
+    newRow.querySelector(".stock").innerText =
+        "0";
+
+    newRow.querySelector(".quantity").value =
+        "1";
+
+    newRow.querySelector(".item-total").innerText =
+        "0.00";
+
+    cartBody.appendChild(newRow);
+
+    calculateTotal();
+}
+
+
+function removeRow(button) {
+
+    var rows =
+        document.querySelectorAll(".cart-row");
+
+    if (rows.length > 1) {
+
+        button.closest(".cart-row").remove();
+
+    } else {
+
+        alert("At least one product is required.");
+
+    }
+
+    calculateTotal();
+}
+
+</script>
+
+</body>
+
+</html>

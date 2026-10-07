@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Company - Dairy Farm Shop</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f6f8;
+        }
+
+        .navbar {
+            background: #2e7d32;
+            color: white;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 15px;
+        }
+
+        .container {
+            width: 600px;
+            margin: 40px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #2e7d32;
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        button {
+            background: #2e7d32;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1b5e20;
+        }
+
+        .back {
+            display: inline-block;
+            background: #777;
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="navbar">
+
+    <strong>Dairy Farm Shop</strong>
+
+    <div>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/companies">Companies</a>
+        <a href="/logout">Logout</a>
+    </div>
+
+</div>
+
+<div class="container">
+
+    <h2>Edit Company</h2>
+
+    <form action="/companies/save" method="post">
+
+        <input
+            type="hidden"
+            name="id"
+            th:value="${company.id}">
+
+        <label>Company Name</label>
+
+        <input
+            type="text"
+            name="companyName"
+            th:value="${company.companyName}"
+            required>
+
+        <label>Description</label>
+
+        <textarea
+            name="description"
+            th:text="${company.description}"></textarea>
+
+        <button type="submit">
+            Update Company
+        </button>
+
+        <a href="/companies" class="back">
+            Cancel
+        </a>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>
